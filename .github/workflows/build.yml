@@ -24,7 +24,7 @@ jobs:
         buildozer android debug || echo "Build failed, checking bin directory"
         ls -la bin/
     - name: Upload APK
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: apk-file
         path: bin/*.apk
