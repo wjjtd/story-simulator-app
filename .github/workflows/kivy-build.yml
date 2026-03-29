@@ -33,7 +33,7 @@ jobs:
       run: |
         buildozer android debug --verbose
         echo "Finding APK files..."
-        find . -type f -name "*.apk"
+        find . -type f -name "*.apk" -exec ls -la {} \;
         
     - name: Upload APK
       uses: actions/upload-artifact@v4
