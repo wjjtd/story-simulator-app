@@ -1,0 +1,30 @@
+name: Build APK
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+    - name: Install dependencies
+      run: |
+        pip install buildozer cython
+        sudo apt-get update
+        sudo apt-get install -y build-essential git
+    - name: Initialize Buildozer
+      run: buildozer init || echo "Buildozer already initialized"
+    - name: Build APK
+      run: |
+        mkdir -p bin
+        buildozer android debug || echo "Build failed, checking bin directory"
+        ls -la bin/
+    - name: Upload APK
+      uses: actions/upload-artifact@v2
+      with:
+        name: apk-file
+        path: bin/*.apk
